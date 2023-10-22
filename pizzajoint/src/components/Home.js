@@ -1,29 +1,62 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {motion} from "framer-motion";
+import Loader from './Loader.js';
+
+const buttonVariants ={
+  hover: {
+    scale: 1.1, 
+    color: "rgb(255, 0, 255)", 
+    textShadow: "0px 0px 8px rgb(255, 255, 255)",
+    boxShadow: "0px 0px 8px rgb(255, 255, 255)",
+    transition: {
+      duration: 0.3,
+      yoyo: Infinity,
+    }
+  },
+  visible: {
+    x: 0
+  },
+  hidden:{
+    x: -1000
+  }
+}
+const containerVariants ={
+  hidden: {
+    opacity: 0,
+  },
+  visible:{
+    opacity: 1,
+    transition: { delay: 1.5, duration: 1.5 }
+  },
+  exit: {
+    x: "-100vw",
+    transition: {ease: "easeInOut"},
+  }
+}
 
 const Home = () => {
   return (
-    <motion.div 
-    initial={{opacity: 0}}
-    animate={{opacity: 1}}
-    transition={{delay: 0.2, duration: 1.55}}
-    className="home container">
-      <motion.h2 animate={{}}>
+    <motion.div className="home container"
+      variants={containerVariants} 
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <h2>
         Welcome to Pizza Joint
-      </motion.h2>
+      </h2>
       <Link to="/base">
         <motion.button
-          whileHover={{
-            scale: 1.1, 
-            color: "rgb(255, 0, 255)", 
-            textShadow: "0px 0px 8px rgb(255, 255, 255)",
-            boxShadow: "0px 0px 8px rgb(255, 255, 255)",
-          }}
+          variants={buttonVariants}
+          whileHover="hover"
+          initial="hidden"
+          animate="visible"
         >
           Create Your Pizza
         </motion.button>
       </Link>
+      <Loader />
     </motion.div>
   )
 }
